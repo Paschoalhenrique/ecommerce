@@ -1,17 +1,15 @@
 package com.phsoftware.dscommerce.entities;
 
 import jakarta.persistence.*;
-import org.aspectj.weaver.ast.Or;
-
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-
 @Entity
 @Table(name = "tb_product")
 public class Product {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,7 +20,6 @@ public class Product {
     private Double price;
     private String imgUrl;
 
-
     @ManyToMany
     @JoinTable(name = "tb_product_category",
             joinColumns = @JoinColumn(name = "product_id"),
@@ -32,9 +29,11 @@ public class Product {
     @OneToMany(mappedBy = "id.product")
     private Set<OrderItem> items = new HashSet<>();
 
+    // Construtor padrão
     public Product() {
     }
 
+    // Construtor com argumentos
     public Product(Long id, String name, String description, Double price, String imgUrl) {
         this.id = id;
         this.name = name;
@@ -43,6 +42,7 @@ public class Product {
         this.imgUrl = imgUrl;
     }
 
+    // Getters e Setters
     public Long getId() {
         return id;
     }
@@ -90,15 +90,15 @@ public class Product {
     public Set<OrderItem> getItems() {
         return items;
     }
-    public List<Order> getOrders(){
-        return items.stream().map(x -> x.getOrder()).toList();
+
+    public List<Order> getOrders() {
+        return items.stream().map(OrderItem::getOrder).toList();
     }
 
     @Override
     public final boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Product product)) return false;
-
         return Objects.equals(id, product.id);
     }
 

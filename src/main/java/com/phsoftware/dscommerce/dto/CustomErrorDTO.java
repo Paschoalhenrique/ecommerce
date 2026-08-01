@@ -3,6 +3,7 @@ package com.phsoftware.dscommerce.dto;
 import java.time.Instant;
 
 public class CustomErrorDTO {
+
     private Instant timestamp;
     private Integer status;
     private String error;
